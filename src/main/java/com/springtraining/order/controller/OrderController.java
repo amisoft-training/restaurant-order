@@ -29,7 +29,6 @@ public class OrderController {
 
         RestaurantOrder restaurantOrder = restaurantOrderRepository.findById(Long.valueOf(1)).get();
 
-
         log.info("Welcome to restaurant");
         return restaurantOrder;
     }
