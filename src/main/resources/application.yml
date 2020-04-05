@@ -4,5 +4,13 @@ server:
 spring:
   application:
     name: restaurant-order
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/trainingorder?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
 
 
