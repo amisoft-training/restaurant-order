@@ -11,4 +11,5 @@ public class RestaurantOrderDto {
 
     private String customerId;
     private String orderDetails;
+    private String message;
 }

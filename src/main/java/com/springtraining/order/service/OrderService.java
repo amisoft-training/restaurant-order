@@ -7,6 +7,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class OrderService {
 
@@ -15,12 +17,16 @@ public class OrderService {
 
     public RestaurantOrderDto getOrder(String consumerId){
 
-        RestaurantOrder restaurantOrder = restaurantOrderRepository
+        RestaurantOrderDto restaurantOrderDto = new RestaurantOrderDto();
+        Optional<RestaurantOrder> restaurantOrderOptional = restaurantOrderRepository
                 .findByCustomerId(consumerId);
 
-        RestaurantOrderDto restaurantOrderDto = new RestaurantOrderDto();
-        BeanUtils.copyProperties(restaurantOrder,restaurantOrderDto);
-
+        if(restaurantOrderOptional.isPresent()){
+            BeanUtils.copyProperties(restaurantOrderOptional.get(),restaurantOrderDto);
+            restaurantOrderDto.setMessage("Success find the order");
+        }else{
+            restaurantOrderDto.setMessage("No order find for the consumerID ");
+        }
         return restaurantOrderDto;
     }
 
