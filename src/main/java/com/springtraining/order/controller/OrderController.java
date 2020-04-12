@@ -2,8 +2,6 @@ package com.springtraining.order.controller;
 
 
 import com.springtraining.order.dto.RestaurantOrderDto;
-import com.springtraining.order.entity.RestaurantOrder;
-import com.springtraining.order.repository.RestaurantOrderRepository;
 import com.springtraining.order.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
