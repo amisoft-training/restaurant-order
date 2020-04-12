@@ -9,10 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/restaurantorder")
@@ -22,6 +19,7 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
+
     @GetMapping("/getOrder")
     public ResponseEntity<RestaurantOrderDto> getOrder
             (@RequestParam(value="consumerId") String consumerId) {
@@ -30,7 +28,30 @@ public class OrderController {
         RestaurantOrderDto restaurantOrderDto = orderService.getOrder(consumerId);
         log.info("received response :");
 
-        ResponseEntity<RestaurantOrderDto> responseEntity = new ResponseEntity<>(restaurantOrderDto, HttpStatus.OK);
+        ResponseEntity<RestaurantOrderDto> responseEntity = new ResponseEntity<>
+                (restaurantOrderDto, HttpStatus.OK);
+        return responseEntity;
+    }
+
+    @PostMapping("/createOrder")
+    public ResponseEntity<RestaurantOrderDto> createRestaurantOrder
+            (@RequestBody RestaurantOrderDto restaurantOrderDto){
+
+        log.info("New order request received");
+        RestaurantOrderDto restaurantSavedOrderDto =
+                orderService.createOrder(restaurantOrderDto);
+        log.info("New order created");
+
+        ResponseEntity<RestaurantOrderDto> responseEntity;
+        if(restaurantSavedOrderDto.getFlag()){
+             responseEntity = new ResponseEntity<>
+                    (restaurantOrderDto, HttpStatus.OK);
+        }else{
+
+            responseEntity = new ResponseEntity<>
+                    (restaurantOrderDto, HttpStatus.BAD_REQUEST);
+        }
+
         return responseEntity;
     }
 }
